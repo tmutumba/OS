@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <sys/types.h>
 
 int main(int argc, char *argv[]) {
 
@@ -13,13 +14,15 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    int numOtTimes = atoi(argv[1]);
+    char *end;
+
+    int numOfTimes = strtol(argv[1], &end, 10);
 
     pid_t child = getpid();
 
-    for (int i = 1; i <= numOtTimes; i++ ){
+    for (int i = 1; i <= numOfTimes; i++ ){
         assert(printf("Process %u %d \n", child, i));
     }
-    return numOtTimes;
+    return numOfTimes;
 }
 
