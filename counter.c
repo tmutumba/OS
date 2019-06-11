@@ -1,31 +1,25 @@
-//
-// Created by Tonny Mutumba on 2019-06-08.
-//
+/*
+ Created by Tonny Mutumba on 2019-06-08.
+*/
 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <assert.h>
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char *argv[]) {
 
-    if(argc >= 2){
-        input = argv[1];
-    }
-    else{
-        printf("Not enough arguments given");
-        exit(EXIT_FAILURE);
+    if(argc == 1){
+        return 0;
     }
 
+    int numOtTimes = atoi(argv[1]);
 
-    int i = 1;
-    int a = atoi(a, getchar());
+    pid_t child = getpid();
 
-    /* process PID in loop */
-    while(i <= a){
-        printf("Process = %d\n ", getpid(), i );
-        i++;
+    for (int i = 1; i <= numOtTimes; i++ ){
+        assert(printf("Process %u %d \n", child, i));
     }
-    /* Exit */
-    exit(a);
+    return numOtTimes;
 }
 
