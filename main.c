@@ -19,7 +19,12 @@ int main()
     pid_t child;
     child = fork(); /*fork a child process*/
 
-    int result = 0;
+    int result;
+
+    if (child == -1){
+        perror("Fork returned: ");
+        exit(0);
+    }
 
     if (child == 0){
         execl("./counter", "./counter","5", NULL);
@@ -30,14 +35,18 @@ int main()
         printf("Child PID = %d\n, Parent PID = %d\n", child, getpid());
     }
 
-       waitpid(child, &result, 0);
+    assert(waitpid(child, &result, 0));
 
-       assert(printf("Process exited with result: %d\n", child, WEXITSTATUS(result)) != 0);
+    /*if (WIFEXITED(result)){
+        result = WEXITSTATUS(result);
+        printf("Process exited with result: %d\n", child);
+    }
+    else{
+        printf("Process failed, result=%d\n");
+    }*/
+    assert(printf("Process exited with result: %d\n", child, WEXITSTATUS(result)) != 0);
+    return (0);
        exit(0);
 
-    /*else {
-        error occurred
-        perror("Fork returned: ");
-        exit(0);*/
 }
 
