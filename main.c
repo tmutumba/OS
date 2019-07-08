@@ -12,6 +12,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <assert.h>
+#include <err.h>
 
 
 int main()
@@ -33,20 +34,16 @@ int main()
     if (child >= 0) {
         /* parent */
         printf("Child PID = %d\n, Parent PID = %d\n", child, getpid());
-    }
+    } else {
 
-    assert(waitpid(child, &result, 0));
+        assert(waitpid(child, &result, 0) !=-1);
 
-    /*if (WIFEXITED(result)){
-        result = WEXITSTATUS(result);
-        printf("Process exited with result: %d\n", child);
+        if (WIFEXITED(result) > 0) {
+            assert(printf("Process exited with result: %d\n", child, WEXITSTATUS(result)) != 0);
+            return (0);
+        }
     }
-    else{
-        printf("Process failed, result=%d\n");
-    }*/
-    assert(printf("Process exited with result: %d\n", child, WEXITSTATUS(result)) != 0);
-    return (0);
-       exit(0);
+    return 0;
 
 }
 
